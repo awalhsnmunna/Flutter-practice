@@ -1,104 +1,110 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const myApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class myApp extends StatelessWidget {
+  const myApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.deepPurple,
-          title: Text("Hello World"),
-          centerTitle: true,
-        ),
-        body: Column(
+      title: 'Ostad Flutter App',
+      home: Home(),
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  const Home({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: Column(
           children: [
-            Center(
-              child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5),
-                    )
-                  ),
-                  onPressed: (){
-                print("This is a button");
-              }, child: Row(
-                children: [
-                  Text("Send", style: TextStyle(color: Colors.white, fontSize: 25
-                  ),),
-                  Icon(Icons.send)
-                ],
-              )),
+            Text(
+              "Ostad Flutter 2",
+              style: TextStyle(fontSize: 25, color: Colors.white),
             ),
-            Icon(Icons.add_a_photo, size: 50, color: Colors.red,),
-
-            InkWell(
-              onTap: (){
-                print("I'm inkWell");
-              },
-              onHover: (value){
-                print("I'm inkWell hover");
-              },
-              onDoubleTap: (){
-                print("I'm inkWell double tap");
-              },
-              onLongPress: (){
-                print("I'm inkWell long press");
-              },
-              child: Container(
-                height: 200,
-                width: 200,
-                margin: EdgeInsets.only(top: 50),
-                padding: EdgeInsets.only(top: 50),
-                child: Text("This is a container", style: TextStyle(color: Colors.blue, fontSize: 25),),
-                decoration: BoxDecoration(
-                  color: Colors.deepPurpleAccent,
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.black, width: 5),
-                  boxShadow: [
-
-                  ]
-                )
-              
-              ),
-            ),
-            GestureDetector(
-              onTap: (){
-                print("I'm Gesture");
-              },
-              onDoubleTap: (){
-                print("I'm Gesture double tap");
-              },
-              onLongPress: (){
-                print("I'm Gesture long press");
-              },
-              child: Container(
-                  height: 200,
-                  width: 200,
-                  margin: EdgeInsets.only(top: 50),
-                  padding: EdgeInsets.only(top: 50),
-                  child: Text("This is a container", style: TextStyle(color: Colors.blue, fontSize: 25),),
-                  decoration: BoxDecoration(
-                      color: Colors.deepPurpleAccent,
-                      borderRadius: BorderRadius.circular(15),
-                      border: Border.all(color: Colors.black, width: 5),
-                      boxShadow: [
-              
-                      ]
-                  )
-              
-              ),
-            )
-
           ],
         ),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20,top: 20),
+            child: TextField(
+                decoration: InputDecoration(
+                    hintText: "Enter your email",
+                   hintStyle: TextStyle(fontSize: 15, color: Colors.black),
+                  hintMaxLines: 3,
+                  labelText: "Email",
+                  labelStyle: TextStyle(fontSize: 25, color: Colors.blue),
+                  helperText: "Please enter your email",
+                  helperStyle: TextStyle(fontSize: 15, color: Colors.green),
+                  prefixText: "Email: ",
+                  suffixText: "@gmail.com",
+                  prefixIcon: Icon(Icons.email),
+                  suffixIcon: Icon(Icons.send),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(8)
+                  ),
+            ),
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: "Enter your password",
+                hintStyle: TextStyle(fontSize: 15, color: Colors.black),
+                hintMaxLines: 3,
+                labelText: "Password",
+                labelStyle: TextStyle(fontSize: 25, color: Colors.blue),
+                helperText: "Please enter your password",
+                helperStyle: TextStyle(fontSize: 15, color: Colors.green),
+                prefixText: "Password: ",
+                prefixIcon: Icon(Icons.remove_red_eye),
+                suffixIcon: Icon(Icons.panorama_fish_eye),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(8)
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, right: 20),
+            child: TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                hintText: "Enter your number",
+                hintStyle: TextStyle(fontSize: 15, color: Colors.black),
+                hintMaxLines: 3,
+                labelText: "Number",
+                labelStyle: TextStyle(fontSize: 25, color: Colors.blue),
+                helperText: "Please enter your number",
+                helperStyle: TextStyle(fontSize: 15, color: Colors.green),
+                prefixText: "Numbner: ",
+                prefixIcon: Icon(Icons.email),
+                suffixIcon: Icon(Icons.send),
+                border: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.black),
+                    borderRadius: BorderRadius.circular(8)
+                ),
+              ),
+            ),
+          ),
+        ]
       ),
     );
   }
