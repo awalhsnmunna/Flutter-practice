@@ -10,8 +10,19 @@ class myApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: Colors.green,
+        appBarTheme: AppBarTheme(color: Colors.red, centerTitle: true),
+        scaffoldBackgroundColor: Colors.white,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.green,
+            foregroundColor: Colors.white,
+          ),
+        ),
+      ),
       debugShowCheckedModeBanner: false,
-      title: 'Ostad Flutter App',
+      title: "Flutter App",
       home: Home(),
     );
   }
@@ -22,9 +33,14 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _emailController = TextEditingController();
+    TextEditingController _passwordController = TextEditingController();
+    TextEditingController _numberController = TextEditingController();
+
+    final _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
         title: Column(
           children: [
             Text(
@@ -33,78 +49,172 @@ class Home extends StatelessWidget {
             ),
           ],
         ),
-        centerTitle: true,
       ),
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20,top: 20),
-            child: TextField(
-                decoration: InputDecoration(
-                    hintText: "Enter your email",
-                   hintStyle: TextStyle(fontSize: 15, color: Colors.black),
-                  hintMaxLines: 3,
-                  labelText: "Email",
-                  labelStyle: TextStyle(fontSize: 25, color: Colors.blue),
-                  helperText: "Please enter your email",
-                  helperStyle: TextStyle(fontSize: 15, color: Colors.green),
-                  prefixText: "Email: ",
-                  suffixText: "@gmail.com",
-                  prefixIcon: Icon(Icons.email),
-                  suffixIcon: Icon(Icons.send),
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.circular(8)
+          Form(
+            key: _formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "Email",
+                      label: Text("Email"),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Empty email is not allowed";
+                      }
+                      return null;
+                    },
                   ),
-            ),
-            ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                hintText: "Enter your password",
-                hintStyle: TextStyle(fontSize: 15, color: Colors.black),
-                hintMaxLines: 3,
-                labelText: "Password",
-                labelStyle: TextStyle(fontSize: 25, color: Colors.blue),
-                helperText: "Please enter your password",
-                helperStyle: TextStyle(fontSize: 15, color: Colors.green),
-                prefixText: "Password: ",
-                prefixIcon: Icon(Icons.remove_red_eye),
-                suffixIcon: Icon(Icons.panorama_fish_eye),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.circular(8)
-                ),
+                  SizedBox(height: 20),
+
+                  TextFormField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: "Password",
+                      label: Text("Password"),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty || value.length < 6) {
+                        return "Password must be 6 characters long";
+                      }
+                      return null;
+                    },
+                  ),
+
+                  SizedBox(height: 20),
+
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.green,
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => UserInfo()),
+                          );
+
+                          // Navigator.pushReplacement(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => UserInfo()),
+                          // );
+                        }
+                      },
+                      child: Text(
+                        "Submit",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(height: 20),
+
+                  //GridView
+                  SizedBox(
+                    height: 300,
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 5,
+                      ),
+                      itemCount: 7,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.mobile_friendly,
+                              size: 35,
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 20, right: 20),
-            child: TextField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: "Enter your number",
-                hintStyle: TextStyle(fontSize: 15, color: Colors.black),
-                hintMaxLines: 3,
-                labelText: "Number",
-                labelStyle: TextStyle(fontSize: 25, color: Colors.blue),
-                helperText: "Please enter your number",
-                helperStyle: TextStyle(fontSize: 15, color: Colors.green),
-                prefixText: "Numbner: ",
-                prefixIcon: Icon(Icons.email),
-                suffixIcon: Icon(Icons.send),
-                border: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.black),
-                    borderRadius: BorderRadius.circular(8)
-                ),
-              ),
-            ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          print("Floating action button pressed");
+        },
+        label: Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class UserInfo extends StatelessWidget {
+  const UserInfo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("User Page")),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Back"),
           ),
-        ]
+          ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Page1()),
+              );
+            },
+            child: Text("Page1"),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Page1 extends StatelessWidget {
+  const Page1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Page 1")),
+      body: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Back"),
+          ),
+          /*ElevatedButton(onPressed: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> Page1()));
+            }, child: Text("Page1")), */
+        ],
       ),
     );
   }
